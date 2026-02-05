@@ -1,3 +1,25 @@
 Questions:
 
 Write as many questions as you can based on the project specs.
+
+1. When is the due date of the assignment?  [C]
+2. What if there is no solution? [O] 
+3. How will the output be formatted?  [O] 
+4. How will the input work?   [O] 
+5. What data stuctures will we be using?  [C]
+6. What should be the timeline of the project? [O] 
+7. How much can we work with other people?  [C]
+8. Are we doing a showcase of the project when everyone is done?  [C]
+9. Are we allowed to adjust the symbols in the project to make it easier to read?  [C]
+10. What are we learning with this project? [O] 
+11. Is there any new concepts that we would have to learn?  [O] 
+12. Does this project use a GUI?  [C]
+13. How are we going to test the efficiency of the algorithm?  [O] 
+14. What is the best algorithm for this type of project?  [O] 
+15. How do you explain push and pop?  [O] 
+16. What is the purpose of the coordinate system?  [O] 
+
+What question(s) did you generate that can be better
+(get to real answers or understanding) by rewording them to be open-ended or closed? 
+	Asking a more specific question about data structures to make them more open-ended would work better
+	as it would give more details. 
