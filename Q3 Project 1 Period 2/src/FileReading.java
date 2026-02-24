@@ -17,10 +17,15 @@ public class FileReading {
 				parts[i] = Integer.parseInt(firstLine[i]);
 				//System.out.println(parts[i]);
 			}
-			String[][] map = new String[parts[0]][parts[1]];
+			String[][] map = new String[parts[0]*parts[2]+1][parts[1]];
 			//
 			//
-			int row = 0;
+			for(int i = 0; i < parts.length; i++) {
+				map[0][i] = firstLine[i];
+			}
+			map[0][3] = " ";
+			//
+			int row = 1;
 			while (scanner.hasNextLine() && row < map.length) {       //only works with file having one map
 				String line = scanner.nextLine();
 				String[] l = line.split(" ");
@@ -36,6 +41,7 @@ public class FileReading {
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("IncompleteMapException");
 			e.printStackTrace();
 		}
 		return null;
@@ -53,25 +59,30 @@ public class FileReading {
 				parts[i] = Integer.parseInt(firstLine[i]);
 				//System.out.println(parts[i]);
 			}
-			String[][] map = new String[parts[0]][parts[1]];
+			String[][] map = new String[parts[0]*parts[1]*parts[2]+1][4];
 			//
 			//
-			int row = 0;
-			while (scanner.hasNextLine() && row < map.length) {       //only works with file having one map
+			for(int i = 0; i < parts.length; i++) {
+				map[0][i] = firstLine[i];
+			}
+			map[0][3] = " ";
+			//
+			int row = 1;
+			while (scanner.hasNextLine() && row < parts[0]*parts[1]*parts[2]+1) {       //only works with file having one map
 				String line = scanner.nextLine();
 				String[] l = line.split(" ");
 				
 				for(int i = 0; i < l.length; i++) {
-					map[row][i] = l[i]+" "+row+" "+i+" "+parts[2];
+					map[row][i] = l[i];
 					//System.out.println(map[row][i]);
 				}
 				row++;
 			}
-			
 			return map;
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("IncompleteMapException");
 			e.printStackTrace();
 		}
 		return null;
@@ -79,7 +90,7 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		String easyM = "easyMap.txt";
+		String easyM = "mediumMap.txt";
 		String[][] textmap = readTextMap(easyM);
 		
 		for(int r = 0; r < textmap.length; r++) {
@@ -92,13 +103,15 @@ public class FileReading {
 		
 		System.out.println(" ");
 		
-		String easyC = "easyMap.txt";
+		String easyC = "easyMapC.txt";
 		String[][] coordmap = readCoordMap(easyC);
 		
 		for(int r = 0; r < coordmap.length; r++) {
+			String row = "";
 			for(int c = 0; c < coordmap[0].length; c++) {
-				System.out.println(coordmap[r][c]);
+				row += coordmap[r][c] + " ";
 			}
+			System.out.println(row);
 		}
 		
 	
