@@ -90,7 +90,8 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		String easyM = "mediumMap.txt";
+		String mediumM = "mediumMap.txt";
+		String easyM = "easyMap.txt";
 		String[][] textmap = readTextMap(easyM);
 		
 		for(int r = 0; r < textmap.length; r++) {
