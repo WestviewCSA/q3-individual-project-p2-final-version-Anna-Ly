@@ -4,6 +4,17 @@ import java.util.Scanner;
 
 public class FileReading {
 	
+	public static String easyM = "easyMap.txt";
+	public static String mediumM = "mediumMap.txt";
+	public static String hardM = "hardMap.txt";
+	public static String noSolutionM = "noSolutionMap.txt";
+	
+	public static String easyC = "easyMapC.txt";
+	public static String mediumC = "mediumMapC.txt";
+	public static String hardC = "hardMapC.txt";
+	public static String noSolutionC = "noSolutionMapC.txt";
+	
+	
 	public static String[][] readTextMap(String filename){
 		File file = new File(filename);
 		
@@ -72,10 +83,11 @@ public class FileReading {
 				String line = scanner.nextLine();
 				String[] l = line.split(" ");
 				
-				for(int i = 0; i < l.length; i++) {
-					map[row][i] = l[i];
+				for(int c = 0; c < l.length; c++) {
+					map[r][c] = ".";
 					//System.out.println(map[row][i]);
 				}
+				
 				row++;
 			}
 			return map;
@@ -90,9 +102,7 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		String mediumM = "mediumMap.txt";
-		String easyM = "easyMap.txt";
-		String[][] textmap = readTextMap(easyM);
+		String[][] textmap = readTextMap(mediumM);
 		
 		for(int r = 0; r < textmap.length; r++) {
 			String row = "";
@@ -104,8 +114,9 @@ public class FileReading {
 		
 		System.out.println(" ");
 		
-		String easyC = "easyMapC.txt";
-		String[][] coordmap = readCoordMap(easyC);
+		
+		
+		String[][] coordmap = readCoordMap(mediumC);
 		
 		for(int r = 0; r < coordmap.length; r++) {
 			String row = "";

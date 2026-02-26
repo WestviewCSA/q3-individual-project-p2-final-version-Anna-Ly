@@ -1,0 +1,30 @@
+Design Plan
+
+Week 1: (2/22-2/28)
+Main Goal: Create file reader methods
+	Make sure I can push and commit changes to repository linked to GitHub classroom assignment.                            X
+	Create easy/medium/hard maps showing some understanding of the maps                                                     X
+	Create easy/medium/hard coordinate-based maps showing understanding of the 2nd type of input files.       
+	Be able to read in data from map files                                                                                  X
+	Be able to store data from map files                                                                                    X
+	
+Week 2: (3/1-3/14)
+Main Goal: Create routing methods
+	Start writing code that works with Queue-based approach.
+	Finish and test code for Queue-based approach
+			Be able to transfer data to the router methods
+			Be able to show output (text-map and coordinate-based)
+	Start writing code that works with Stack-based approach.
+	Finish and test code for Stack-based approach
+			Be able to transfer data to the router methods
+			Be able to show output (text-map and coordinate-based)
+	
+Week 3: (3/15-3/22)
+Main Goal: Finish, fix and test routing methods 
+	Start writing code that works with Optimal Path approach.
+	Finish and test code for Optimal Path approach
+			Be able to transfer data to the router methods
+			Be able to show output (text-map and coordinate-based)
+	Check for errors and exceptions
+	Implement runtime evaluation
+	Test program
