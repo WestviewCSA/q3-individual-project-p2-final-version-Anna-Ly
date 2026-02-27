@@ -4,7 +4,7 @@ Week 1: (2/22-2/28)
 Main Goal: Create file reader methods
 	Make sure I can push and commit changes to repository linked to GitHub classroom assignment.                            X
 	Create easy/medium/hard maps showing some understanding of the maps                                                     X
-	Create easy/medium/hard coordinate-based maps showing understanding of the 2nd type of input files.       
+	Create easy/medium/hard coordinate-based maps showing understanding of the 2nd type of input files.                     X
 	Be able to read in data from map files                                                                                  X
 	Be able to store data from map files                                                                                    X
 	
