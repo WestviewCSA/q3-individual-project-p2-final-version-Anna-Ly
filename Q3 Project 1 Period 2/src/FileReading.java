@@ -9,7 +9,8 @@ public class FileReading {
 	public static String hardM = "hardMap.txt";
 	public static String noSolutionM = "noSolutionMap.txt";
 	
-	public static String easyC = "easyMapC.txt";
+	public static String easyC1 = "easyMapC.txt";
+	public static String easyC2 = "easyMapC2.txt";
 	public static String mediumC = "mediumMapC.txt";
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
@@ -34,7 +35,7 @@ public class FileReading {
 			for(int i = 0; i < parts.length; i++) {
 				map[0][i] = firstLine[i];
 			}
-			map[0][3] = " ";
+			map[0][3] = "";
 			//
 			int row = 1;
 			while (scanner.hasNextLine() && row < map.length) {       //only works with file having one map
@@ -76,15 +77,26 @@ public class FileReading {
 			for(int i = 0; i < parts.length; i++) {
 				map[0][i] = firstLine[i];
 			}
-			map[0][3] = " ";
+			map[0][3] = "";
+			//
+			for(int r = 1; r < map.length; r++) {
+				for(int c = 0; c < map[r].length; c++) {
+					map[r][c] = "";
+				}
+			}
+			
 			//
 			int row = 1;
 			while (scanner.hasNextLine() && row < parts[0]*parts[1]*parts[2]+1) {       //only works with file having one map
 				String line = scanner.nextLine();
 				String[] l = line.split(" ");
+				if(l[0] == "") {    // stop reading if no more coordinates in the map
+					row = parts[0]*parts[1]*parts[2];
+				}
 				
-				for(int c = 0; c < l.length; c++) {
-					map[r][c] = ".";
+				
+				for(int i = 0; i < l.length; i++) {
+					map[row][i] = l[i];
 					//System.out.println(map[row][i]);
 				}
 				
@@ -116,7 +128,7 @@ public class FileReading {
 		
 		
 		
-		String[][] coordmap = readCoordMap(mediumC);
+		String[][] coordmap = readCoordMap(noSolutionC);
 		
 		for(int r = 0; r < coordmap.length; r++) {
 			String row = "";
