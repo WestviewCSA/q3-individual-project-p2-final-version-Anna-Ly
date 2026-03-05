@@ -3,8 +3,11 @@ import java.util.ArrayList;
 public class Queue {
 	
 	private ArrayList<Integer> queueList = new ArrayList<Integer>();
-	private static int index = 0;
+	private static int index;
 	
+	public Queue() {
+		index = 0;
+	}
 	
 	public static void enqueue(ArrayList<Integer> queue, int o){
 		queue.add(o);

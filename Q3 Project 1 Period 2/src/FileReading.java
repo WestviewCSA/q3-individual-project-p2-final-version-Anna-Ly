@@ -90,10 +90,9 @@ public class FileReading {
 			while (scanner.hasNextLine() && row < parts[0]*parts[1]*parts[2]+1) {       //only works with file having one map
 				String line = scanner.nextLine();
 				String[] l = line.split(" ");
-				if(l[0] == "") {    // stop reading if no more coordinates in the map
+				if(line.isEmpty()) {    // stop reading if no more coordinates in the map
 					row = parts[0]*parts[1]*parts[2];
 				}
-				
 				
 				for(int i = 0; i < l.length; i++) {
 					map[row][i] = l[i];
@@ -112,6 +111,31 @@ public class FileReading {
 		return null;
 	}
 	
+	
+	public static boolean checkValid(String[][] map) {
+		
+		boolean wolverine = false;
+		boolean buck = false; 
+		for(int r = 0; r < map.length; r++) {
+			for(int c = 0; c < map[r].length; c++) {
+				if(map[r][c].equals("W")) {
+					wolverine = true;
+				}
+				if(map[r][c].equals("$")) {
+					buck = true;
+				}
+			}
+			
+		}
+		
+		if(wolverine && buck) {
+			return true;
+		}
+		else {
+			return false; 
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		String[][] textmap = readTextMap(mediumM);
@@ -128,7 +152,7 @@ public class FileReading {
 		
 		
 		
-		String[][] coordmap = readCoordMap(noSolutionC);
+		String[][] coordmap = readCoordMap(easyC1);
 		
 		for(int r = 0; r < coordmap.length; r++) {
 			String row = "";
@@ -137,6 +161,9 @@ public class FileReading {
 			}
 			System.out.println(row);
 		}
+		
+		boolean isValid = checkValid(coordmap);
+        System.out.println("Valid setup? " + isValid);
 		
 	
 	}
