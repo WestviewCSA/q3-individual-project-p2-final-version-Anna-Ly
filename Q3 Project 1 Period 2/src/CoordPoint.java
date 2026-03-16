@@ -4,6 +4,10 @@ public class CoordPoint {
 	private int row, column;
 	private String symbol;
 	
+	public CoordPoint(String s) {
+		symbol = s;
+	}
+	
 	public CoordPoint(int r, int c, String s) {
 		row = r;
 		column = c;

@@ -16,7 +16,7 @@ public class FileReading {
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
 	
-	public static String[][] readTextMap(String filename){
+	public static CoordPoint[][] readTextMap(String filename){
 		File file = new File(filename);
 		
 	
@@ -29,13 +29,13 @@ public class FileReading {
 				parts[i] = Integer.parseInt(firstLine[i]);
 				//System.out.println(parts[i]);
 			}
-			String[][] map = new String[parts[0]*parts[2]+1][parts[1]];
+			CoordPoint[][] map = new CoordPoint[parts[0]*parts[2]+1][parts[1]];
 			//
 			//
 			for(int i = 0; i < parts.length; i++) {
-				map[0][i] = firstLine[i];
+				map[0][i] = new CoordPoint(firstLine[i]);
 			}
-			map[0][3] = "";
+			map[0][3] = new CoordPoint("");
 			//
 			int row = 1;
 			while (scanner.hasNextLine() && row < map.length) {       //only works with file having one map
@@ -43,7 +43,7 @@ public class FileReading {
 				String[] l = line.split(" ");
 				
 				for(int i = 0; i < l.length; i++) {
-					map[row][i] = l[i];
+					map[row][i] = new CoordPoint(row-1, i, l[i]);
 					//System.out.println(map[row][i]);
 				}
 				row++;
@@ -60,7 +60,7 @@ public class FileReading {
 		
 	}
 	
-	public static String[][] readCoordMap(String filename){
+	public static CoordPoint[][] readCoordMap(String filename){
 		File file = new File(filename);
 		try (Scanner scanner = new Scanner(file)) {
 			String dimensionLine = scanner.nextLine();
@@ -71,17 +71,18 @@ public class FileReading {
 				parts[i] = Integer.parseInt(firstLine[i]);
 				//System.out.println(parts[i]);
 			}
-			String[][] map = new String[parts[0]*parts[1]*parts[2]+1][4];
+			CoordPoint[][] map = new CoordPoint[parts[0]*parts[1]*parts[2]+1][4];
 			//
 			//
 			for(int i = 0; i < parts.length; i++) {
-				map[0][i] = firstLine[i];
+				map[0][i] = new CoordPoint(firstLine[i]);
 			}
-			map[0][3] = "";
+			map[0][3] = new CoordPoint("");
 			//
+			
 			for(int r = 1; r < map.length; r++) {
 				for(int c = 0; c < map[r].length; c++) {
-					map[r][c] = "";
+					map[r][c] = new CoordPoint("");
 				}
 			}
 			
@@ -95,7 +96,7 @@ public class FileReading {
 				}
 				
 				for(int i = 0; i < l.length; i++) {
-					map[row][i] = l[i];
+					map[row][i] = new CoordPoint(row-1, i, l[i]);
 					//System.out.println(map[row][i]);
 				}
 				
@@ -112,16 +113,16 @@ public class FileReading {
 	}
 	
 	
-	public static boolean checkValid(String[][] map) {
+	public static boolean checkValid(CoordPoint[][] map) {
 		
 		boolean wolverine = false;
 		boolean buck = false; 
 		for(int r = 0; r < map.length; r++) {
 			for(int c = 0; c < map[r].length; c++) {
-				if(map[r][c].equals("W")) {
+				if(map[r][c].symbol().equals("W")) {
 					wolverine = true;
 				}
-				if(map[r][c].equals("$")) {
+				if(map[r][c].symbol().equals("$")) {
 					buck = true;
 				}
 			}
@@ -137,7 +138,7 @@ public class FileReading {
 	}
 	
 	
-	public static void printMap(String[][] textmap) {
+	public static void printMap(CoordPoint[][] textmap) {
 		if (textmap == null) {              
 		        System.out.println("Map is null");
 		        return;
@@ -145,7 +146,7 @@ public class FileReading {
 		for(int r = 0; r < textmap.length; r++) {
 			String row = "";
 			for(int c = 0; c < textmap[r].length; c++) {
-				row += textmap[r][c] + " ";
+				row += textmap[r][c].symbol() + " ";
 			}
 			System.out.println(row);
 		}
@@ -155,15 +156,15 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		String[][] textmap = readTextMap(easyM);
+		CoordPoint[][] textmap = readTextMap(easyM);
 		printMap(textmap);
 		
-		String[][] coordmap = readCoordMap(noSolutionC);
+		CoordPoint[][] coordmap = readCoordMap(noSolutionC);
 		printMap(coordmap);
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
 		
-	
+       
 	}
 }
