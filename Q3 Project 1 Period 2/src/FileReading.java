@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileReading {
@@ -146,11 +147,15 @@ public class FileReading {
 		for(int r = 0; r < textmap.length; r++) {
 			String row = "";
 			for(int c = 0; c < textmap[r].length; c++) {
-				row += textmap[r][c].symbol() + " ";
+				if(!textmap[r][c].symbol().equals("")) {
+					row += textmap[r][c].symbol() + " ";
+				}
 			}
-			System.out.println(row);
+			if(row.length() > 0) {
+				System.out.println(row);
+			}
 		}
-		System.out.println(" ");
+		System.out.println("");
 	}
 	
 	
@@ -164,7 +169,9 @@ public class FileReading {
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
-		
-       
+        
+       QueueMap map = new QueueMap(textmap);
+       System.out.println(map.findWr());
+       printMap(map.map());
 	}
 }

@@ -3,7 +3,7 @@ public class QueueMap {
 	
 	private Queue<CoordPoint> queue;
 	private Queue<CoordPoint> visited;
-	private CoordPoint[][] text;
+	private CoordPoint[][] text;     // this guy is the output and can be altered to show the path 
 	private int rowW;
 	private int colW;
 	private int r, c;
@@ -16,6 +16,8 @@ public class QueueMap {
 		dimensionC = Integer.parseInt(textmap[0][1].symbol());      // omg its initialization its the dimensions of the map!!!
 		dimensionL = Integer.parseInt(textmap[0][2].symbol());
 		
+		text = new CoordPoint[dimensionR][dimensionC];
+		
 		for(int r = 1; r < textmap.length; r++) {
 			for(int c = 0; c < textmap[r].length; c++) {  //just to remove that pesky pesky size dimension thingy
 				text[r-1][c] = textmap[r][c];
@@ -23,7 +25,7 @@ public class QueueMap {
 		}
 	}
 	
-	public void findWr(){                             //finding W on the map for the first thing in the queue
+	public String findWr(){                             //finding W on the map for the first thing in the queue
 		for(int r = 0; r < text.length; r++) {
 			for(int c = 0; c < text[r].length; c++) {
 				if(text[r][c].symbol().equals("W")) {
@@ -34,6 +36,7 @@ public class QueueMap {
 		}
 		r = rowW;
 		c = colW;
+		return "W is at row " + rowW + ", column " + colW;
 	}
 	
 	public void path(int r, int c) { // this needs uh what do you call it recursive nods nods i will do it i will do it
