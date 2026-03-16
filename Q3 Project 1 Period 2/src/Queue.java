@@ -1,36 +1,39 @@
 import java.util.ArrayList;
 
-public class Queue {
+public class Queue<T> {
 	
-	private ArrayList<Integer> queueList = new ArrayList<Integer>();
-	private static int index;
+	private ArrayList<T> queue; 
 	
 	public Queue() {
-		index = 0;
+		queue = new ArrayList<T>();
 	}
 	
-	public static void enqueue(ArrayList<Integer> queue, int o){
+	public void enqueue(T o){
 		queue.add(o);
-		index++;
 	}
 	
-	public static void dequeue(ArrayList<Integer> queue){
-		queue.remove(0);
-		index--;
+	public T dequeue(){
+		if(queue.size() == 0) {
+			return null;
+		}
+		return queue.remove(0);
 	}
 	
-	public int peek(){
-		return queueList.get(index);
-	}
+	public T peek(){
+		if(queue.size() == 0) {
+			return null;
+		}
+		return queue.get(0);
+	} 
 	
-	public boolean isEmpty(ArrayList<Integer> queue) {
+	public boolean isEmpty() {
 		if(queue.size() == 0) {
 			return true;
 		}
 		return false;
 	}
 	
-	public int size(ArrayList<Integer> queue){
+	public int size(){
 		return queue.size();
 	}
 

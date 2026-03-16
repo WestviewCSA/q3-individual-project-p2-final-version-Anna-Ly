@@ -1,26 +1,31 @@
 import java.util.ArrayList;
 
-public class Stack {
+public class Stack<T> {
 
-	ArrayList<Integer> queueList = new ArrayList<Integer>();
-	private static int index;
+	ArrayList<T> queueList;
 	
 	public Stack() {
-		index = 0;
+		queueList = new ArrayList<T>();
 	}
 	
-	public static void push(ArrayList<Integer> queue, int o){
-		queue.add(o);
-		index++;
+	public void push(T o){
+		queueList.add(o);
 	}
 	
-	public int pop(ArrayList<Integer> queue){
-		index--;
-		return queue.remove(index);
-	}
+	public T pop(){
+	    if(queueList.size() == 0){
+            return null;
+        }
+        else{
+            return queueList.remove(queueList.size()-1);
+        }
+    }
 	
-	public int peek(){
-		return queueList.get(index);
+	public T peek(){
+		if(queueList.size() == 0){
+	           return null; 
+	    }
+		return queueList.get(queueList.size()-1);
 	}
 	
 	public int search(int o){
@@ -32,15 +37,15 @@ public class Stack {
 		return -1;
 	}
 	
-	public boolean isEmpty(ArrayList<Integer> queue) {
-		if(queue.size() == 0) {
+	public boolean isEmpty() {
+		if(queueList.size() == 0) {
 			return true;
 		}
 		return false;
 	}
 	
-	public int size(ArrayList<Integer> queue){
-		return queue.size();
+	public int size(){
+		return queueList.size();
 	}
 	
 }
