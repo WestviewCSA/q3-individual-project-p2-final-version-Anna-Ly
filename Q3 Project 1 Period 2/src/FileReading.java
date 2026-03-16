@@ -136,31 +136,30 @@ public class FileReading {
 		}
 	}
 	
-	public static void main(String[] args) {
-		
-		String[][] textmap = readTextMap(mediumM);
-		
+	
+	public static void printMap(String[][] textmap) {
+		if (textmap == null) {              
+		        System.out.println("Map is null");
+		        return;
+		}
 		for(int r = 0; r < textmap.length; r++) {
 			String row = "";
-			for(int c = 0; c < textmap[0].length; c++) {
+			for(int c = 0; c < textmap[r].length; c++) {
 				row += textmap[r][c] + " ";
 			}
 			System.out.println(row);
 		}
-		
 		System.out.println(" ");
+	}
+	
+	
+	public static void main(String[] args) {
 		
+		String[][] textmap = readTextMap(easyM);
+		printMap(textmap);
 		
-		
-		String[][] coordmap = readCoordMap(easyC1);
-		
-		for(int r = 0; r < coordmap.length; r++) {
-			String row = "";
-			for(int c = 0; c < coordmap[0].length; c++) {
-				row += coordmap[r][c] + " ";
-			}
-			System.out.println(row);
-		}
+		String[][] coordmap = readCoordMap(noSolutionC);
+		printMap(coordmap);
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
