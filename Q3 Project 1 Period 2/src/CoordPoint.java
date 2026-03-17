@@ -8,6 +8,12 @@ public class CoordPoint {
 		symbol = s;
 	}
 	
+	public CoordPoint(int r, int c, String s) {
+		row = r;
+		column = c;
+		symbol = s;
+	}
+	
 	public CoordPoint(int l, int r, int c, String s) {
 		row = r;
 		column = c;

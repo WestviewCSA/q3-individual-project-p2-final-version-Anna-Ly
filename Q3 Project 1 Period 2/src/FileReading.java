@@ -31,15 +31,7 @@ public class FileReading {
 				//System.out.println(parts[i]);
 			}
 			CoordPoint[][][] map = new CoordPoint[parts[2]][parts[0]][parts[1]]; //layer, row, col
-			//
-			// 
-			/*
-			for(int i = 0; i < parts.length; i++) {
-				map[0][i] = new CoordPoint(firstLine[i]);
-			}
-			map[0][3] = new CoordPoint("");        //dont need to store header
-			int row = 1;
-			// */
+
 			int layer = 0;
 			int row = 0;
 			while (scanner.hasNextLine() && layer < map.length) {       //only works with file having one map
@@ -83,32 +75,26 @@ public class FileReading {
 				parts[i] = Integer.parseInt(firstLine[i]);
 				//System.out.println(parts[i]);
 			}
-			CoordPoint[][] map = new CoordPoint[parts[0]*parts[1]*parts[2]+1][4];
-			//
-			//
-			for(int i = 0; i < parts.length; i++) {
-				map[0][i] = new CoordPoint(firstLine[i]);
-			}
-			map[0][3] = new CoordPoint("");
+			CoordPoint[][] map = new CoordPoint[parts[0]*parts[1]*parts[2]][4];
 			//
 			
-			for(int r = 1; r < map.length; r++) {
+			for(int r = 0; r < map.length; r++) {
 				for(int c = 0; c < map[r].length; c++) {
 					map[r][c] = new CoordPoint("");
 				}
 			}
 			
 			//
-			int row = 1;
-			while (scanner.hasNextLine() && row < parts[0]*parts[1]*parts[2]+1) {       //only works with file having one map
+			int row = 0;
+			while (scanner.hasNextLine() && row < parts[0]*parts[1]*parts[2]) {       //only works with file having one map
 				String line = scanner.nextLine();
+				if (line.isEmpty()) {
+					row = parts[0]*parts[1]*parts[2]-1;
+                }
 				String[] l = line.split(" ");
-				if(line.isEmpty()) {    // stop reading if no more coordinates in the map
-					row = parts[0]*parts[1]*parts[2];
-				}
 				
 				for(int i = 0; i < l.length; i++) {
-					map[row][i] = new CoordPoint(row-1, i, l[i]);
+					map[row][i] = new CoordPoint(row, i, l[i]);
 					//System.out.println(map[row][i]);
 				}
 				
@@ -172,14 +158,36 @@ public class FileReading {
 	}
 	
 	
+	public static void printCoord(CoordPoint[][] textmap) {
+		if (textmap == null) {              
+	        System.out.println("Map is null");
+	        return;
+		}
+		
+		for(int r = 0; r < textmap.length; r++) {
+			String row = "";
+			for(int c = 0; c < textmap[r].length; c++) {
+				if(!textmap[r][c].symbol().equals("")) {
+					row += textmap[r][c].symbol() + " ";
+				}
+			}
+			
+			if(row.length() > 0) {
+				System.out.println(row);
+			}
+		}
+		System.out.println("");
+	}
+	
 	public static void main(String[] args) {
 		
 		CoordPoint[][][] textmap = readTextMap(mediumM);
 		printMap(textmap);
+		CoordPoint[][] coordmap = readCoordMap(noSolutionC);
+		printCoord(coordmap);
 		
 		/*
-		CoordPoint[][] coordmap = readCoordMap(noSolutionC);
-		printMap(coordmap);
+		
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
