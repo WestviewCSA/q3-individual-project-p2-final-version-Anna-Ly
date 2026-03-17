@@ -9,20 +9,20 @@ public class OptimalPath {
 	
 	public OptimalPath(CoordPoint[][] textmap){
 		dimensionR = Integer.parseInt(textmap[0][0].symbol());
-		dimensionC = Integer.parseInt(textmap[0][1].symbol());      // omg its initialization its the dimensions of the map!!!
+		dimensionC = Integer.parseInt(textmap[0][1].symbol());      // initialization of dimensions
 		dimensionL = Integer.parseInt(textmap[0][2].symbol());
 		
-		text = new CoordPoint[dimensionR][dimensionC];
+		text = new CoordPoint[dimensionR*dimensionL][dimensionC];
 		
 		for(int r = 1; r < textmap.length; r++) {
-			for(int c = 0; c < textmap[r].length; c++) {  //just to remove that pesky pesky size dimension thingy
+			for(int c = 0; c < textmap[r].length; c++) {  //remove size dimension header
 				text[r-1][c] = textmap[r][c];
 			}
 		}
 	}
 	
-	public String findWr(){                             //finding W on the map for the first thing in the queue
-		for(int r = 0; r < text.length; r++) {
+	public String findWr(int level){                             //finding W on the map for the first thing in the queue
+		for(int r = 0; r < dimensionL*level; r++) {
 			for(int c = 0; c < text[r].length; c++) {
 				if(text[r][c].symbol().equals("W")) {
 					rowW = r;
