@@ -186,17 +186,17 @@ public class FileReading {
 		CoordPoint[][] coordmap = readCoordMap(noSolutionC);
 		printCoord(coordmap);
 		
-		/*
-		
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-       OptimalPath map = new OptimalPath(textmap);
-       System.out.println(map.findWr(1));
-       System.out.println(map.findWr(2));
-       printMap(map.map());
-       printMap(map.sol());
+        OptimalPath map = new OptimalPath(textmap);
+        System.out.println(map.findWr(1));
+        System.out.println(map.findWr(2));
+        printMap(map.map());
+        printMap(map.sol());
+		/*
+       
        */
 	}
 }

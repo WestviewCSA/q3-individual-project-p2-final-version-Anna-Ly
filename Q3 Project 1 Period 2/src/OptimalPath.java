@@ -1,24 +1,18 @@
 
 public class OptimalPath {
 	
-	private CoordPoint[][] text;     // this guy is the output and can be altered to show the path 
+	private CoordPoint[][][] text;     // this guy is the output and can be altered to show the path 
 	private int rowW;
 	private int colW;
 	private int r, c;
 	private int dimensionR, dimensionC, dimensionL;
 	
-	public OptimalPath(CoordPoint[][] textmap){
-		dimensionR = Integer.parseInt(textmap[0][0].symbol());
-		dimensionC = Integer.parseInt(textmap[0][1].symbol());      // initialization of dimensions
-		dimensionL = Integer.parseInt(textmap[0][2].symbol());
+	public OptimalPath(CoordPoint[][][] textmap){
+		dimensionR = text[0].length;
+		dimensionC = text[0][0].length;      // initialization of dimensions
+		dimensionL = text.length;
 		
-		text = new CoordPoint[dimensionR*dimensionL][dimensionC];
-		
-		for(int r = 1; r < textmap.length; r++) {
-			for(int c = 0; c < textmap[r].length; c++) {  //remove size dimension header
-				text[r-1][c] = textmap[r][c];
-			}
-		}
+		text = new CoordPoint[dimensionL][dimensionR][dimensionC];
 	}
 	
 	public String findWr(int level){                             //finding W on the map for the first thing in the queue
