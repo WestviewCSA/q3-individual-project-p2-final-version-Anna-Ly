@@ -170,8 +170,9 @@ public class FileReading {
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-       QueueMap map = new QueueMap(textmap);
+       OptimalPath map = new OptimalPath(textmap);
        System.out.println(map.findWr());
        printMap(map.map());
+       printMap(map.sol());
 	}
 }

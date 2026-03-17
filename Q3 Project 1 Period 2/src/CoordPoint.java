@@ -25,4 +25,8 @@ public class CoordPoint {
 	public String symbol() { //applies to dimensions, ., $, @, and |
 		return symbol;
 	}
+	
+	public void setSymbol(String s) {
+		symbol = s;
+	}
 }
