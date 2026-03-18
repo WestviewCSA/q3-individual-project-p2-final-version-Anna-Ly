@@ -8,28 +8,42 @@ public class OptimalPath {
 	private int dimensionR, dimensionC, dimensionL;
 	
 	public OptimalPath(CoordPoint[][][] textmap){
-		dimensionR = text[0].length;
-		dimensionC = text[0][0].length;      // initialization of dimensions
-		dimensionL = text.length;
+		dimensionR = textmap[0].length;
+		dimensionC = textmap[0][0].length;      // initialization of dimensions
+		dimensionL = textmap.length;
 		
+		text = textmap;
+		
+		/*
 		text = new CoordPoint[dimensionL][dimensionR][dimensionC];
+		for(int l = 0; l < text.length; l++) {
+			for(int r = 0; r < text[l].length; r++) {
+				for(int c = 0; c < text[l][r].length; c++) {
+					
+					
+				}
+				
+			}
+		}
+		*/
+		
 	}
 	
 	public String findWr(int level){                             //finding W on the map for the first thing in the queue
 		for(int r = 0; r < dimensionL*level; r++) {
 			for(int c = 0; c < text[r].length; c++) {
-				if(text[r][c].symbol().equals("W")) {
+				if(text[level][r][c].symbol().equals("W")) {
 					rowW = r;
 					colW = c;
 				}
 			}
 		}
-		return "W is at row " + rowW + ", column " + colW;
+		return "In level " + level + " W is at row " + rowW + ", column " + colW;
 	}
 	
-	public boolean findPath(int r, int c) {
+	public boolean findPath(int l, int r, int c) {
 
-	    String sym = text[r][c].symbol();
+	    String sym = text[l][r][c].symbol();
 
 	    if(sym.equals("$")) {
 	        return true;
@@ -40,31 +54,31 @@ public class OptimalPath {
 		}
 
 	    if(!sym.equals("W")) {
-	        text[r][c].setSymbol("+");
+	        text[l][r][c].setSymbol("+");
 	    }
 	    
-	    if(findPath(r-1, c)) { //north
+	    if(findPath(l, r-1, c)) { //north
 	        return true;
 		}
-	    if(findPath(r+1, c)) { //south
+	    if(findPath(l, r+1, c)) { //south
 	        return true;
 		}
-	    if(findPath(r, c+1)) { //east
+	    if(findPath(l, r, c+1)) { //east
 	        return true;
 	    }
-	    if(findPath(r, c-1)) { //west
+	    if(findPath(l, r, c-1)) { //west
 	        return true;
 	    }
 	    
 	    if(!sym.equals("W")) { 
-	        text[r][c].setSymbol(".");
+	        text[l][r][c].setSymbol(".");
 	    }
 	    
 	    return false;
 	}
 	
 	
-	public CoordPoint[][] map(){
+	public CoordPoint[][][] map(){
 		if(text == null) {
 			return null;
 		}

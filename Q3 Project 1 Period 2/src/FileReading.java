@@ -183,7 +183,7 @@ public class FileReading {
 		
 		CoordPoint[][][] textmap = readTextMap(mediumM);
 		printMap(textmap);
-		CoordPoint[][] coordmap = readCoordMap(noSolutionC);
+		CoordPoint[][] coordmap = readCoordMap(mediumC);
 		printCoord(coordmap);
 		
 		
@@ -193,10 +193,10 @@ public class FileReading {
         OptimalPath map = new OptimalPath(textmap);
         System.out.println(map.findWr(1));
         System.out.println(map.findWr(2));
-        printMap(map.map());
-        printMap(map.sol());
+
 		/*
-       
+               printMap(map.map());
+        printMap(map.sol());
        */
 	}
 }
