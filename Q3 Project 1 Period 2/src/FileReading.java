@@ -191,9 +191,6 @@ public class FileReading {
         System.out.println("Valid setup? " + isValid);
         
         OptimalPath map = new OptimalPath(textmap);
-        System.out.println(map.findWr(0));
-        //System.out.println(map.findWr(1));
-        
         printMap(map.map());
         printMap(map.sol());
 		/*

@@ -5,7 +5,6 @@ public class OptimalPath {
 	private int rowW;
 	private int colW;
 	private int levelW;
-	private int l, r, c;
 	private int dimensionR, dimensionC, dimensionL;
 	
 	public OptimalPath(CoordPoint[][][] textmap){
@@ -30,9 +29,10 @@ public class OptimalPath {
 		}
 		
 		findWr(0);
+		
 	}
 	
-	public String findWr(int level){                             //finding W on the map for the first thing in the queue
+	public void findWr(int level){                             //finding W on the map for the first thing in the queue
 		for(int r = 0; r < text[level].length; r++) {
 			for(int c = 0; c < text[level][r].length; c++) {
 				if(text[level][r][c].symbol().equals("W")) {
@@ -42,8 +42,9 @@ public class OptimalPath {
 				}
 			}
 		}
-		return "In level " + levelW + ", W is at row " + rowW + ", column " + colW;
+		//System.out.println("In level " + levelW + ", W is at row " + rowW + ", column " + colW);
 	}
+	
 	
 	public boolean findPath(int l, int r, int c) {
 		
@@ -61,13 +62,13 @@ public class OptimalPath {
 	        return false;
 		}
 
-	    if(!sym.equals("W")) {
+	    if(!sym.equals("W") && !sym.equals("|")) {
 	        text[l][r][c].setSymbol("+");
 	    }
 	    
-	    if(!sym.equals("|")) {
-	        if (levelW+1 < dimensionL) {
-	            findWr(levelW+1);
+	    if(sym.equals("|")) {
+	        if (l+1 < dimensionL) {
+	            findWr(l+1);
 	            if (findPath(levelW, rowW, colW)) {
 	                return true;
 	            }
