@@ -203,14 +203,19 @@ public class FileReading {
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-        QueueMap qMap = new QueueMap(textmap);
-        printMap(qMap.map());
-        printMap(qMap.sol());
         
 		/*
+		StackMap sMap = new StackMap(textmap); //works
+        printMap(sMap.map());
+        printMap(sMap.sol());
+        
         OptimalPath map = new OptimalPath(textmap); // works
         printMap(map.map());
         printMap(map.sol());
+        
+         QueueMap qMap = new QueueMap(textmap); //works
+        printMap(qMap.map());
+        printMap(qMap.sol());
        */
 	}
 }
