@@ -16,8 +16,6 @@ public class FileReading {
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
-	public static boolean isMap; 
-	
 	
 	public static CoordPoint[][][] readTextMap(String filename){
 		File file = new File(filename);
@@ -54,7 +52,6 @@ public class FileReading {
 					layer++;
 				}
 			}
-			isMap = true;
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -103,7 +100,6 @@ public class FileReading {
 				
 				row++;
 			}
-			isMap = false;
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -155,7 +151,6 @@ public class FileReading {
 					map[layerL][rowL][colL] = new CoordPoint(layerL, rowL, colL, symbolL);
 				}
 			}
-			isMap = true;
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -167,8 +162,24 @@ public class FileReading {
 	}
 	
 	public static CoordPoint[][] MapToCoord(CoordPoint[][][] map){ 
-		isMap = false; // work on these after queue and stack map are done
-		return null;	
+		
+		CoordPoint[][] coord = new CoordPoint[map.length*map[0].length*map[1].length][4];
+		int row = 0;
+		for(int l = 0; l < map.length; l++) {
+			for(int r = 0; r < map[l].length; r++) {
+				for(int c = 0; c < map[l][r].length; c++) {
+					CoordPoint p = map[l][r][c];
+					if(p.symbol().equals("+")) {
+						coord[row][0] = new CoordPoint(p.symbol());
+						coord[row][1] = new CoordPoint(Integer.toString(p.row()));
+						coord[row][2] = new CoordPoint(Integer.toString(p.column())); 
+						coord[row][3] = new CoordPoint(Integer.toString(p.layer()));
+						row++;
+					}
+				}
+			}
+		}
+		return coord;	
 	}
 	
 	public static boolean checkValid(CoordPoint[][] map) {
@@ -227,8 +238,9 @@ public class FileReading {
 		for(int r = 0; r < textmap.length; r++) {
 			String row = "";
 			for(int c = 0; c < textmap[r].length; c++) {
-				if(!textmap[r][c].symbol().equals("")) {
+				if(textmap[r][c] != null && !textmap[r][c].symbol().equals("")) {
 					row += textmap[r][c].symbol() + " ";
+					//System.out.println(textmap[r][c].symbol());
 				}
 			}
 			
@@ -252,6 +264,12 @@ public class FileReading {
         
         CoordPoint[][][] coordtomap = CoordToMap(mediumC);
         printMap(coordtomap);
+        
+        StackMap sMap = new StackMap(textmap); //works
+        printMap(sMap.map());
+        printMap(sMap.sol());
+        CoordPoint[][] maptocoord = MapToCoord(sMap.sol());
+        printCoord(maptocoord);
         
 		/*
 		StackMap sMap = new StackMap(textmap); //works
