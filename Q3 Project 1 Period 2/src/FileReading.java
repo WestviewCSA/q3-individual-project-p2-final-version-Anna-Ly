@@ -115,8 +115,53 @@ public class FileReading {
 	
 	
 	public static CoordPoint[][][] CoordToMap(CoordPoint[][] map){
+		int row = 0;
+	    int col = 0;
+	    int layer = 0;
+	    for (int i = 0; i < map.length; i++) {
+	    	int l = Integer.parseInt(map[i][3].symbol());
+	        if (l > layer) {
+	            layer = l;
+	        }
+	        
+	        int r = Integer.parseInt(map[i][1].symbol());
+	        if (r > row) {
+	            row = r;
+	        }
+	        
+	        int c = Integer.parseInt(map[i][2].symbol());
+	        if (c > col) {
+	            col = c;
+	        }
+	    }
+	    layer++;
+	    row++;
+	    col++;
+
+
+	    CoordPoint[][][] map3D = new CoordPoint[layer][row][col];
+	    
+	    for (int r = 0; r < map.length; r++) {
+	    	int rowL = Integer.parseInt(map[r][3].symbol());
+	    	int rowR = Integer.parseInt(map[r][1].symbol());
+	    	int rowC = Integer.parseInt(map[r][2].symbol());
+	    	String symbol = map[r][0].symbol();
+	    	
+	        map3D[rowL][rowR][rowC] = new CoordPoint(rowL, rowR, rowC, symbol);
+	    }
+	    
+	    for (int l = 0; l < map3D.length; l++) {
+	        for (int r = 0; r < map3D[l].length; r++) {
+	            for (int c = 0; c < map3D[l][r].length; c++) {
+	            	if(map3D[l][r][c] == null) {
+	            		map3D[l][r][c] = new CoordPoint(l, r, c, ".");
+	            	}
+	            }
+	        }
+	    }
+	    
 		isMap = true;
-		return null;	
+		return map3D;	
 	}
 	
 	public static CoordPoint[][] MapToCoord(CoordPoint[][][] map){ 
@@ -194,7 +239,7 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		CoordPoint[][][] textmap = readTextMap(hardM);
+		CoordPoint[][][] textmap = readTextMap(mediumM);
 		printMap(textmap);
 		CoordPoint[][] coordmap = readCoordMap(mediumC);
 		printCoord(coordmap);
@@ -203,7 +248,8 @@ public class FileReading {
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-        
+        CoordPoint[][][] coordtomap = CoordToMap(coordmap);
+        printMap(coordtomap);
 		/*
 		StackMap sMap = new StackMap(textmap); //works
         printMap(sMap.map());
