@@ -48,10 +48,10 @@ public class QueueMap {
 		
 		CoordPoint start = text[levelW][rowW][colW];
 		queue.enqueue(start);
-		visited.enqueue(start);
 		
 		while (!queue.isEmpty()) {
 			CoordPoint current = queue.dequeue();
+			visited.enqueue(current);
 			
 			int l = current.layer();
 			int r = current.row();
@@ -61,28 +61,27 @@ public class QueueMap {
 			if(sym.equals("$")) {
 				return true;
 			}
-			if(!sym.equals("W") && !sym.equals("$")) {
+			if(!sym.equals("W") && !sym.equals("|")) {
 				current.setSymbol("+");
 			}
 			
-			if (l < 0 || l >= dimensionL || r < 0 || r >= dimensionR || c < 0 || c >= dimensionC) { // boundaries
-				return false;
-			}
-			else {
+			int[][] directions = {{-1, 0},{1, 0},{0, 1},{0, -1}}; //N, S, E, W
+			
+			for(int i = 0; i < directions.length; i++) {
+				int newR = r + directions[i][0];
+				int newC = c + directions[i][1];
 				
-				int newR = r;
-				int newC = c;
-				
+				if (newR < 0 || newR >= dimensionR || newC < 0 || newC >= dimensionC) { // boundaries
+					return false;
+				}
 				if(!hasVisited(l, newR, newC)) {
-					
-					String next = text[l][newR][newC];
+					String next = text[l][newR][newC].symbol();
 					if(next.equals(".") || next.equals("$") || next.equals("|")) {
 						CoordPoint nextPoint = text[l][newR][newC];
+						queue.enqueue(nextPoint);
 					}
 				}
-					
 			}
-			
 			
 		    if(sym.equals("|")) {
 		        if (l+1 < dimensionL) {
@@ -90,7 +89,6 @@ public class QueueMap {
 					if(!hasVisited(levelW, rowW, colW)) {
 						CoordPoint nextStart = text[levelW][rowW][colW];
 						queue.enqueue(nextStart);
-						visited.enqueue(nextStart);
 					}
 		        }
 		    }  
@@ -101,10 +99,21 @@ public class QueueMap {
 	
 	
 	public boolean hasVisited(int l, int r, int c) {
-		for(CoordPoint p : visited) {
+		boolean inVisited = false;
+		boolean inQueue = false;
+		for(CoordPoint p : visited) { // figure out traversing later
 			if(p.layer() == l && p.row() == r && p.column() == c) {
-				return true;
+				inVisited = true;
 			}
+		}
+		for(CoordPoint p : queue) {
+			if(p.layer() == l && p.row() == r && p.column() == c) {
+				inQueue = true;
+			}
+		}
+		
+		if(inVisited || inQueue) {
+			return true;
 		}
 		return false;
 	}

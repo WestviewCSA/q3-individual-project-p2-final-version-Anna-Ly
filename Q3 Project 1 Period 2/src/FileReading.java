@@ -205,7 +205,7 @@ public class FileReading {
         
         QueueMap qMap = new QueueMap(textmap);
         printMap(qMap.map());
-        //printMap(qMap.sol());
+        printMap(qMap.sol());
         
 		/*
         OptimalPath map = new OptimalPath(textmap); // works
