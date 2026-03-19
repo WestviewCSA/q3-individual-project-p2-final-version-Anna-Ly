@@ -16,6 +16,8 @@ public class FileReading {
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
+	public static boolean isMap; 
+	
 	
 	public static CoordPoint[][][] readTextMap(String filename){
 		File file = new File(filename);
@@ -52,7 +54,7 @@ public class FileReading {
 					layer++;
 				}
 			}
-			
+			isMap = true;
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -100,6 +102,7 @@ public class FileReading {
 				
 				row++;
 			}
+			isMap = false;
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -110,6 +113,16 @@ public class FileReading {
 		return null;
 	}
 	
+	
+	public static CoordPoint[][][] CoordToMap(CoordPoint[][] map){
+		isMap = true;
+		return null;	
+	}
+	
+	public static CoordPoint[][] MapToCoord(CoordPoint[][][] map){ 
+		isMap = false; // work on these after queue and stack map are done
+		return null;	
+	}
 	
 	public static boolean checkValid(CoordPoint[][] map) {
 		
@@ -190,11 +203,14 @@ public class FileReading {
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-        OptimalPath map = new OptimalPath(textmap);
+        QueueMap qMap = new QueueMap(textmap);
+        printMap(qMap.map());
+        //printMap(qMap.sol());
+        
+		/*
+        OptimalPath map = new OptimalPath(textmap); // works
         printMap(map.map());
         printMap(map.sol());
-		/*
-        
        */
 	}
 }
