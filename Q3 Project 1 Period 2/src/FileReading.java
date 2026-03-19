@@ -68,6 +68,7 @@ public class FileReading {
 	
 	public static CoordPoint[][] readCoordMap(String filename){
 		File file = new File(filename);
+		
 		try (Scanner scanner = new Scanner(file)) {
 			String dimensionLine = scanner.nextLine();
 			String[] firstLine = dimensionLine.split(" ");
@@ -114,54 +115,55 @@ public class FileReading {
 	}
 	
 	
-	public static CoordPoint[][][] CoordToMap(CoordPoint[][] map){
-		int row = 0;
-	    int col = 0;
-	    int layer = 0;
-	    for (int i = 0; i < map.length; i++) {
-	    	int l = Integer.parseInt(map[i][3].symbol());
-	        if (l > layer) {
-	            layer = l;
-	        }
-	        
-	        int r = Integer.parseInt(map[i][1].symbol());
-	        if (r > row) {
-	            row = r;
-	        }
-	        
-	        int c = Integer.parseInt(map[i][2].symbol());
-	        if (c > col) {
-	            col = c;
-	        }
-	    }
-	    layer++;
-	    row++;
-	    col++;
-
-
-	    CoordPoint[][][] map3D = new CoordPoint[layer][row][col];
-	    
-	    for (int r = 0; r < map.length; r++) {
-	    	int rowL = Integer.parseInt(map[r][3].symbol());
-	    	int rowR = Integer.parseInt(map[r][1].symbol());
-	    	int rowC = Integer.parseInt(map[r][2].symbol());
-	    	String symbol = map[r][0].symbol();
-	    	
-	        map3D[rowL][rowR][rowC] = new CoordPoint(rowL, rowR, rowC, symbol);
-	    }
-	    
-	    for (int l = 0; l < map3D.length; l++) {
-	        for (int r = 0; r < map3D[l].length; r++) {
-	            for (int c = 0; c < map3D[l][r].length; c++) {
-	            	if(map3D[l][r][c] == null) {
-	            		map3D[l][r][c] = new CoordPoint(l, r, c, ".");
-	            	}
-	            }
-	        }
-	    }
-	    
-		isMap = true;
-		return map3D;	
+	public static CoordPoint[][][] CoordToMap(String filename){
+		File file = new File(filename);
+		
+		try (Scanner scanner = new Scanner(file)) {
+			String dimensionLine = scanner.nextLine();
+			String[] firstLine = dimensionLine.split(" ");
+			////
+			int[] parts = new int[firstLine.length];          //initalization of 2d array
+			for(int i = 0; i < parts.length; i++) {
+				parts[i] = Integer.parseInt(firstLine[i]);
+				//System.out.println(parts[i]);
+			}
+			CoordPoint[][][] map = new CoordPoint[parts[2]][parts[0]][parts[1]]; //layer, row, col
+			
+			for(int l = 0; l < map.length; l++) {
+				for(int r = 0; r < map[l].length; r++) {
+					for(int c = 0; c < map[l][r].length; c++) {
+						map[l][r][c] = new CoordPoint(l, r, c, ".");
+					}
+				}
+			}
+			
+			
+			boolean done = false;
+			while (scanner.hasNextLine() && !done) {       //only works with file having one map
+				String line = scanner.nextLine();
+				if (line.isEmpty()) {
+                    done = true;
+                }
+				else {
+					String[] l = line.split(" ");
+					String symbolL = l[0];
+					//System.out.println(l[0]);
+					int rowL = Integer.parseInt(l[1]);
+					int colL = Integer.parseInt(l[2]);
+					int layerL = Integer.parseInt(l[3]);
+				
+					map[layerL][rowL][colL] = new CoordPoint(layerL, rowL, colL, symbolL);
+				}
+			}
+			isMap = true;
+			return map;
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("IncompleteMapException");
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static CoordPoint[][] MapToCoord(CoordPoint[][][] map){ 
@@ -248,8 +250,9 @@ public class FileReading {
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
         
-        CoordPoint[][][] coordtomap = CoordToMap(coordmap);
+        CoordPoint[][][] coordtomap = CoordToMap(mediumC);
         printMap(coordtomap);
+        
 		/*
 		StackMap sMap = new StackMap(textmap); //works
         printMap(sMap.map());
