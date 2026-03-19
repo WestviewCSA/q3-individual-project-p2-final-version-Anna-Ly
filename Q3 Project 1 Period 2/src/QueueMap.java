@@ -72,7 +72,7 @@ public class QueueMap {
 				int newC = c + directions[i][1];
 				
 				if (newR < 0 || newR >= dimensionR || newC < 0 || newC >= dimensionC) { // boundaries
-					return false;
+					continue;
 				}
 				if(!hasVisited(l, newR, newC)) {
 					String next = text[l][newR][newC].symbol();
@@ -86,10 +86,8 @@ public class QueueMap {
 		    if(sym.equals("|")) {
 		        if (l+1 < dimensionL) {
 		            findWr(l+1);
-					if(!hasVisited(levelW, rowW, colW)) {
-						CoordPoint nextStart = text[levelW][rowW][colW];
-						queue.enqueue(nextStart);
-					}
+		            CoordPoint nextStart = text[levelW][rowW][colW];
+					queue.enqueue(nextStart);
 		        }
 		    }  
 		}
@@ -101,15 +99,19 @@ public class QueueMap {
 	public boolean hasVisited(int l, int r, int c) {
 		boolean inVisited = false;
 		boolean inQueue = false;
-		for(CoordPoint p : visited) { // figure out traversing later
+		for(int i = 0; i < visited.size(); i++) {
+			CoordPoint p = visited.dequeue();
 			if(p.layer() == l && p.row() == r && p.column() == c) {
 				inVisited = true;
 			}
+			visited.enqueue(p);
 		}
-		for(CoordPoint p : queue) {
+		for(int i = 0; i < queue.size(); i++) {
+			CoordPoint p = queue.dequeue();
 			if(p.layer() == l && p.row() == r && p.column() == c) {
 				inQueue = true;
 			}
+			queue.enqueue(p);
 		}
 		
 		if(inVisited || inQueue) {
