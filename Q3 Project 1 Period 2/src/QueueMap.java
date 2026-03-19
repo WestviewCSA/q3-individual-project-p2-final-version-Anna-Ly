@@ -47,6 +47,7 @@ public class QueueMap {
 	public boolean findPath() { 
 		
 		CoordPoint start = text[levelW][rowW][colW];
+		start.setPrev(null);
 		queue.enqueue(start);
 		
 		while (!queue.isEmpty()) {
@@ -59,11 +60,24 @@ public class QueueMap {
 			String sym = current.symbol();
 			
 			if(sym.equals("$")) {
+			    CoordPoint path = current.getPrev();
+			    while(path != null) {
+			    	String pathSym = path.symbol();
+			    	if(!pathSym.equals("W") && !pathSym.equals("|")) {
+						path.setSymbol("+");
+					}
+			        path = path.getPrev();
+			    }
+			    
 				return true;
 			}
+			/*
 			if(!sym.equals("W") && !sym.equals("|")) {
 				current.setSymbol("+");
 			}
+			*/
+			
+			
 			
 			int[][] directions = {{-1, 0},{1, 0},{0, 1},{0, -1}}; //N, S, E, W
 			
@@ -78,6 +92,7 @@ public class QueueMap {
 					String next = text[l][newR][newC].symbol();
 					if(next.equals(".") || next.equals("$") || next.equals("|")) {
 						CoordPoint nextPoint = text[l][newR][newC];
+						nextPoint.setPrev(current);
 						queue.enqueue(nextPoint);
 					}
 				}
@@ -87,6 +102,7 @@ public class QueueMap {
 		        if (l+1 < dimensionL) {
 		            findWr(l+1);
 		            CoordPoint nextStart = text[levelW][rowW][colW];
+		            nextStart.setPrev(current);
 					queue.enqueue(nextStart);
 		        }
 		    }  

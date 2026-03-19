@@ -3,6 +3,7 @@ public class CoordPoint {
 	
 	private int row, column, layer;
 	private String symbol;
+	private CoordPoint prev;
 	
 	public CoordPoint(String s) {
 		symbol = s;
@@ -40,4 +41,14 @@ public class CoordPoint {
 	public void setSymbol(String s) {
 		symbol = s;
 	}
+	
+	public void setPrev(CoordPoint p) {
+		prev = p;
+	}
+	
+	public CoordPoint getPrev() {
+		return prev;
+	}
+	
+	
 }

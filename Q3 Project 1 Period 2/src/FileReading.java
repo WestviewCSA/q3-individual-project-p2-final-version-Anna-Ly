@@ -194,7 +194,7 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		
-		CoordPoint[][][] textmap = readTextMap(mediumM);
+		CoordPoint[][][] textmap = readTextMap(hardM);
 		printMap(textmap);
 		CoordPoint[][] coordmap = readCoordMap(mediumC);
 		printCoord(coordmap);
