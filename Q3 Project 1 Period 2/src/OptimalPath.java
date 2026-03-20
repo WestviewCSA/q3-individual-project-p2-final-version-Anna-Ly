@@ -62,12 +62,6 @@ public class OptimalPath {
 	    if(!sym.equals(".") && !sym.equals("W") && !sym.equals("|")) {
 	        return false;
 		}
-
-	    boolean visited = false;
-	    if(sym.equals(".")) {
-	        text[l][r][c].setSymbol("+");
-	        visited = true;
-	    }
 	    
 	    if(sym.equals("|")) {
 	        if (l+1 < dimensionL) {
@@ -77,6 +71,12 @@ public class OptimalPath {
 	            }
 	        }
 	        return false;
+	    }
+
+	    boolean visited = false;
+	    if(sym.equals(".")) {
+	        text[l][r][c].setSymbol("+");
+	        visited = true;
 	    }
 	    
 	    if(findPath(l, r-1, c)) { //north

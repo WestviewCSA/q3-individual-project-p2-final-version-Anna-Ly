@@ -16,10 +16,14 @@ public class FileReading {
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
-	private static boolean inputM;
-	private static boolean outputM;
-	private static int method;
 	
+	private static boolean stack;
+	private static boolean queue;
+	private static boolean opt;
+	private static boolean time;
+	private static boolean incoordinate;
+	private static boolean outcoordinate;
+	private static boolean help;
 	
 	public static CoordPoint[][][] readTextMap(String filename){
 		File file = new File(filename);
@@ -238,7 +242,7 @@ public class FileReading {
 	
 	public static void printCoord(CoordPoint[][] textmap) {
 		if (textmap == null) {              
-			System.out.println("No solution path found");
+			System.out.println("The Wolverine Store is closed.");
 	        return;
 		}
 		
@@ -259,82 +263,76 @@ public class FileReading {
 	}
 	
 	public static void main(String[] args) {
-		int startTime = (int) System.currentTimeMillis();
 		
-		inputM = true;          // is input a Map?
-		outputM = true;        // will output be a Map?
-		method = 2;             // 0 - stack , 1 - queue, 2 - optimal
 		CoordPoint[][][] textmap;
-		String filename = hardM;
+		String filename = noSolutionM;
+		time = true;     //show runtime or not
+		incoordinate = false;          // is input a Coord?
+		outcoordinate = false;        // will output be a Coord?
+		stack = true;
+		queue = false;
+		opt = false; // 0 - stack , 1 - queue, 2 - optimal
+		help = true;
 		
-		if(!inputM) {
-			textmap = CoordToMap(filename);
+		if(help) {
+			System.out.println("Help Center: place your argument as follows");
+			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean stack> <boolean queue> <boolean opt> <boolean runTime>");
+			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
+			System.exit(0);
+		}
+		
+		if(stack == true && (stack == queue || stack == opt)) {
+			System.out.println("Two method switches are true. Only one switch must be true.");
+		}
+		if(queue == true && (queue == stack || queue == opt)) {
+			System.out.println("Two method switches are true. Only one switch must be true.");
+		}
+		
+		if(incoordinate) { //Incoordinate
+			textmap = CoordToMap(filename); 
 		}
 		else {
 			textmap = readTextMap(filename);
 		}
 		
-		if(method == 0) {
-			Stack(textmap, outputM);
-		}
-		else if(method == 1) {
-			Queue(textmap, outputM);
-		}
-		else if(method == 2) {
-			Optimal(textmap, outputM);
-		}
 		
+		int startTime = (int) System.currentTimeMillis();
+		
+		CoordPoint[][][] map = null;
+		if(stack) {
+			StackMap sMap = new StackMap(textmap);
+			map = sMap.sol();
+		}
+		else if(queue) {
+			QueueMap qMap = new QueueMap(textmap);
+			map = qMap.sol();
+		} 
+		else if(opt) {
+			OptimalPath oMap = new OptimalPath(textmap);
+			map = oMap.sol();
+		}
 		
 		int endTime =  (int) System.currentTimeMillis();
 		double duration = (double)(endTime - startTime)/1000;
 		
-		System.out.println("Total Runtime: " + duration + " seconds");
-		/*
-		CoordPoint[][][] textmap = readTextMap(mediumM);
-		printMap(textmap);
-		CoordPoint[][] coordmap = readCoordMap(mediumC);
-		printCoord(coordmap);
-		
-		
-		boolean isValid = checkValid(coordmap);
-        System.out.println("Valid setup? " + isValid);
-       */
-	}
-	
-	public static void Stack(CoordPoint[][][] textmap, boolean outputM) {
-		StackMap sMap = new StackMap(textmap); //works
-        //printMap(sMap.map());
-        
-        if(outputM) {
-        	printMap(sMap.sol());
-        }
-        else {
-        	CoordPoint[][] maptocoord = MapToCoord(sMap.sol());
+        if(outcoordinate) { //Outcoordinate
+        	CoordPoint[][] maptocoord = MapToCoord(map);
         	printCoord(maptocoord);
         }
-	}
-	
-	public static void Queue(CoordPoint[][][] textmap, boolean outputM) {
-		QueueMap qMap = new QueueMap(textmap); //works
-        //printMap(qMap.map());
-	       if(outputM) {
-	        	printMap(qMap.sol());
-	        }
-	        else {
-	        	CoordPoint[][] maptocoord = MapToCoord(qMap.sol());
-	        	printCoord(maptocoord);
-	        }
-	}
-	
-	public static void Optimal(CoordPoint[][][] textmap, boolean outputM) {
-		OptimalPath map = new OptimalPath(textmap); // works
-        //printMap(map.map());
-	    if(outputM) {
-	        printMap(map.sol());
-	    }
-	    else {
-	        CoordPoint[][] maptocoord = MapToCoord(map.sol());
-	        printCoord(maptocoord);
-	    }
+        else {
+        	printMap(map);
+        	
+        	CoordPoint[][] maptocoord = MapToCoord(map);  // only checks if there's a path or not
+        	if(maptocoord == null) {
+        		System.out.println("The Wolverine Store is closed.");
+        	}
+        }
+		
+        
+		if(time) {
+			System.out.println("Total Runtime: " + duration + " seconds");
+		}
+		System.exit(-1);
+		
 	}
 }
