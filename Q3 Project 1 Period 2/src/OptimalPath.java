@@ -48,6 +48,7 @@ public class OptimalPath {
 	
 	public boolean findPath(int l, int r, int c) {
 		
+		
 		if (l < 0 || l >= dimensionL || r < 0 || r >= dimensionR || c < 0 || c >= dimensionC) { // boundaries
 			return false;
 		}
@@ -78,9 +79,21 @@ public class OptimalPath {
 	    if(findPath(l, r-1, c)) { //north
 	        return true;
 		}
-	    if(findPath(l, r+1, c)) { //south
-	        return true;
-		}
+	    
+	    if (r + 1 >= dimensionR) {
+	    	if(l+1 < dimensionL) {
+	    		if(findPath(l+1, 0, c)) { //south moving down a layer
+	    			return true;
+	    		}
+	    	}
+	    	return false;
+	    }
+	    else {
+	    	if(findPath(l, r+1, c)) { //south
+	    		return true;
+	    	}
+	    }
+
 	    if(findPath(l, r, c+1)) { //east
 	        return true;
 	    }

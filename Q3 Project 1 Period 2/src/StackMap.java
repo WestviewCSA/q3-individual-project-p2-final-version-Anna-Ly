@@ -86,6 +86,15 @@ public class StackMap {
 				int newR = r + directions[i][0];
 				int newC = c + directions[i][1];
 				
+				if(l+1 < dimensionL && newR >= dimensionR && !hasVisited(l + 1, 0, c)) {
+					String next = text[l+1][0][newC].symbol();
+					if(next.equals(".") || next.equals("$") || next.equals("|")) {
+						CoordPoint nextPoint = text[l+1][0][newC];
+						nextPoint.setPrev(current);
+						stack.push(nextPoint);
+						//System.out.println(nextPoint.row());
+					}
+				} 
 				if (newR < 0 || newR >= dimensionR || newC < 0 || newC >= dimensionC) { // boundaries
 					continue;
 				}
@@ -98,6 +107,9 @@ public class StackMap {
 					}
 				}
 			}
+			
+			
+			
 			
 		    if(sym.equals("|")) {
 		        if (l+1 < dimensionL) {
