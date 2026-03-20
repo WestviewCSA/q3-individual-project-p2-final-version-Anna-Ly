@@ -41,7 +41,7 @@ public class QueueMap {
 				}
 			}
 		}
-		System.out.println("In level " + levelW + ", W is at row " + rowW + ", column " + colW);
+		//System.out.println("In level " + levelW + ", W is at row " + rowW + ", column " + colW);
 	}
 	
 	public boolean findPath() { 

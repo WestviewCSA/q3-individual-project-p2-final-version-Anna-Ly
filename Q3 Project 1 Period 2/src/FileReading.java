@@ -16,6 +16,10 @@ public class FileReading {
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
+	private static boolean inputM;
+	private static boolean outputM;
+	private static int method;
+	
 	
 	public static CoordPoint[][][] readTextMap(String filename){
 		File file = new File(filename);
@@ -252,7 +256,31 @@ public class FileReading {
 	}
 	
 	public static void main(String[] args) {
+		inputM = false;
+		outputM = false;
+		method = 0;             // 0 - stack , 1 - queue, 2 - optimal
+		CoordPoint[][][] textmap;
+		String filename = easyC1;
 		
+		if(!inputM) {
+			textmap = CoordToMap(filename);
+		}
+		else {
+			textmap = readTextMap(filename);
+		}
+		
+		if(method == 0) {
+			Stack(textmap, outputM);
+		}
+		else if(method == 1) {
+			Queue(textmap, outputM);
+		}
+		else if(method == 2) {
+			Optimal(textmap, outputM);
+		}
+		
+        
+		/*
 		CoordPoint[][][] textmap = readTextMap(mediumM);
 		printMap(textmap);
 		CoordPoint[][] coordmap = readCoordMap(mediumC);
@@ -261,28 +289,43 @@ public class FileReading {
 		
 		boolean isValid = checkValid(coordmap);
         System.out.println("Valid setup? " + isValid);
-        
-        CoordPoint[][][] coordtomap = CoordToMap(mediumC);
-        printMap(coordtomap);
-        
-        StackMap sMap = new StackMap(textmap); //works
-        printMap(sMap.map());
-        printMap(sMap.sol());
-        CoordPoint[][] maptocoord = MapToCoord(sMap.sol());
-        printCoord(maptocoord);
-        
-		/*
-		StackMap sMap = new StackMap(textmap); //works
-        printMap(sMap.map());
-        printMap(sMap.sol());
-        
-        OptimalPath map = new OptimalPath(textmap); // works
-        printMap(map.map());
-        printMap(map.sol());
-        
-         QueueMap qMap = new QueueMap(textmap); //works
-        printMap(qMap.map());
-        printMap(qMap.sol());
        */
+	}
+	
+	public static void Stack(CoordPoint[][][] textmap, boolean outputM) {
+		StackMap sMap = new StackMap(textmap); //works
+        //printMap(sMap.map());
+        
+        if(outputM) {
+        	printMap(sMap.sol());
+        }
+        else {
+        	CoordPoint[][] maptocoord = MapToCoord(sMap.sol());
+        	printCoord(maptocoord);
+        }
+	}
+	
+	public static void Queue(CoordPoint[][][] textmap, boolean outputM) {
+		QueueMap qMap = new QueueMap(textmap); //works
+        //printMap(qMap.map());
+	       if(outputM) {
+	        	printMap(qMap.sol());
+	        }
+	        else {
+	        	CoordPoint[][] maptocoord = MapToCoord(qMap.sol());
+	        	printCoord(maptocoord);
+	        }
+	}
+	
+	public static void Optimal(CoordPoint[][][] textmap, boolean outputM) {
+		OptimalPath map = new OptimalPath(textmap); // works
+        //printMap(map.map());
+	    if(outputM) {
+	        printMap(map.sol());
+	    }
+	    else {
+	        CoordPoint[][] maptocoord = MapToCoord(map.sol());
+	        printCoord(maptocoord);
+	    }
 	}
 }
