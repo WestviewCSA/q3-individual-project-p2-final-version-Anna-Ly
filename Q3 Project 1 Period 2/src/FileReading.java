@@ -257,7 +257,7 @@ public class FileReading {
 	
 	public static void main(String[] args) {
 		inputM = false;
-		outputM = false;
+		outputM = true;
 		method = 0;             // 0 - stack , 1 - queue, 2 - optimal
 		CoordPoint[][][] textmap;
 		String filename = easyC1;
