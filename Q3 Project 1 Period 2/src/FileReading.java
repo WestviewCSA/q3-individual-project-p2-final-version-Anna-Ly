@@ -67,7 +67,7 @@ public class FileReading {
 		
 	}
 	
-	public static CoordPoint[][] readCoordMap(String filename){
+	public static CoordPoint[][] readCoordMap(String filename){ //no longer being used
 		File file = new File(filename);
 		
 		try (Scanner scanner = new Scanner(file)) {
@@ -167,7 +167,7 @@ public class FileReading {
 	
 	public static CoordPoint[][] MapToCoord(CoordPoint[][][] map){ 
 		
-		CoordPoint[][] coord = new CoordPoint[map.length*map[0].length*map[1].length][4];
+		CoordPoint[][] coord = new CoordPoint[map.length*map[0].length*map[0][0].length][4];
 		int row = 0;
 		for(int l = 0; l < map.length; l++) {
 			for(int r = 0; r < map[l].length; r++) {
@@ -182,6 +182,9 @@ public class FileReading {
 					}
 				}
 			}
+		}
+		if(row == 0) {
+			return null;
 		}
 		return coord;	
 	}
@@ -235,7 +238,7 @@ public class FileReading {
 	
 	public static void printCoord(CoordPoint[][] textmap) {
 		if (textmap == null) {              
-	        System.out.println("Map is null");
+			System.out.println("No solution path found");
 	        return;
 		}
 		
@@ -256,11 +259,13 @@ public class FileReading {
 	}
 	
 	public static void main(String[] args) {
-		inputM = false;
-		outputM = true;
-		method = 0;             // 0 - stack , 1 - queue, 2 - optimal
+		int startTime = (int) System.currentTimeMillis();
+		
+		inputM = true;          // is input a Map?
+		outputM = true;        // will output be a Map?
+		method = 2;             // 0 - stack , 1 - queue, 2 - optimal
 		CoordPoint[][][] textmap;
-		String filename = easyC1;
+		String filename = mediumM;
 		
 		if(!inputM) {
 			textmap = CoordToMap(filename);
@@ -279,7 +284,11 @@ public class FileReading {
 			Optimal(textmap, outputM);
 		}
 		
-        
+		
+		int endTime =  (int) System.currentTimeMillis();
+		double duration = (double)(endTime - startTime)/1000;
+		
+		System.out.println("Total Runtime: " + duration + " seconds");
 		/*
 		CoordPoint[][][] textmap = readTextMap(mediumM);
 		printMap(textmap);
