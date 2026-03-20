@@ -278,6 +278,11 @@ public class FileReading {
 			System.out.println("Help Center: place your argument as follows");
 			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean stack> <boolean queue> <boolean opt> <boolean runTime>");
 			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
+			System.out.println(" ");
+			System.out.println("Example:");
+			System.out.println("mediumMap.txt false false true false false true");
+			System.out.println("Input is a text-map and output is a text-map. The path is determined through Stacks and it shows the runtime.");
+			
 			System.exit(0);
 		}
 		
