@@ -63,8 +63,10 @@ public class OptimalPath {
 	        return false;
 		}
 
-	    if(!sym.equals("W") && !sym.equals("|")) {
+	    boolean visited = false;
+	    if(sym.equals(".")) {
 	        text[l][r][c].setSymbol("+");
+	        visited = true;
 	    }
 	    
 	    if(sym.equals("|")) {
@@ -74,6 +76,7 @@ public class OptimalPath {
 	                return true;
 	            }
 	        }
+	        return false;
 	    }
 	    
 	    if(findPath(l, r-1, c)) { //north
@@ -86,7 +89,6 @@ public class OptimalPath {
 	    			return true;
 	    		}
 	    	}
-	    	return false;
 	    }
 	    else {
 	    	if(findPath(l, r+1, c)) { //south
@@ -101,7 +103,7 @@ public class OptimalPath {
 	        return true;
 	    }
 	    
-	    if(!sym.equals("W")) { 
+	    if(visited) { 
 	        text[l][r][c].setSymbol(".");
 	    }
 	    

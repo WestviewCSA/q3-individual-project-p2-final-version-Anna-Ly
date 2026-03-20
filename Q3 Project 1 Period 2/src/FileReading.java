@@ -265,7 +265,7 @@ public class FileReading {
 		outputM = true;        // will output be a Map?
 		method = 2;             // 0 - stack , 1 - queue, 2 - optimal
 		CoordPoint[][][] textmap;
-		String filename = mediumM;
+		String filename = hardM;
 		
 		if(!inputM) {
 			textmap = CoordToMap(filename);
