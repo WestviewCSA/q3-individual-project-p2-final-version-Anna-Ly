@@ -16,7 +16,7 @@ public class FileReading {
 	public static String hardC = "hardMapC.txt";
 	public static String noSolutionC = "noSolutionMapC.txt";
 	
-	
+	private static String filename;
 	private static boolean stack;
 	private static boolean queue;
 	private static boolean opt;
@@ -265,34 +265,92 @@ public class FileReading {
 	public static void main(String[] args) {
 		
 		CoordPoint[][][] textmap;
-		String filename = noSolutionM;
-		time = true;     //show runtime or not
+		filename = "noSolutionMap.txt";
 		incoordinate = false;          // is input a Coord?
 		outcoordinate = false;        // will output be a Coord?
 		stack = true;
-		queue = false;
-		opt = false; // 0 - stack , 1 - queue, 2 - optimal
-		help = true;
+		queue = false;       //methods
+		opt = false; 
+		time = true;     //show runtime or not
+		help = false;
 		
-		if(help) {
-			System.out.println("Help Center: place your argument as follows");
-			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean stack> <boolean queue> <boolean opt> <boolean runTime>");
+		for(int i = 0; i < args.length; i++) {
+			//System.out.println(args[i]);
+		}
+		
+		
+		if(args.length == 1) {
+			if(args[0].toLowerCase().equals("yes")) {
+				help = true;
+			}
+			else {
+				System.out.println("Not a valid argument");
+			}
+		}
+		else if(args.length == 7) {
+			filename = args[0];
+			incoordinate = Boolean.parseBoolean(args[1]);          // is input a Coord?
+			outcoordinate = Boolean.parseBoolean(args[2]);        // will output be a Coord?
+			stack = Boolean.parseBoolean(args[3]);
+			queue = Boolean.parseBoolean(args[4]);       //methods
+			opt = Boolean.parseBoolean(args[5]); 
+			time = Boolean.parseBoolean(args[6]);     //show runtime or not
+		}
+		else {
+			System.out.println("Place your argument as follows");
+			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime>");
 			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
 			System.out.println(" ");
 			System.out.println("Example:");
 			System.out.println("mediumMap.txt false false true false false true");
-			System.out.println("Input is a text-map and output is a text-map. The path is determined through Stacks and it shows the runtime.");
+			System.out.println(" ");
+			System.out.println("Need more help? Input argument as Yes");
+			
+			System.exit(0);
+		}
+		
+		
+		if(help) {
+			System.out.println("Help Center:");
+			System.out.println("This program is designed to create a path from the Wolverine to the Wolverine Buck in text-map format or coordinate-based system");
+			System.out.println("It takes the input of a text-map format or coordinate-based system and outputs a text-map format or coordinate-based system.");
+			System.out.println("It uses several methods, Stack, Queue and Optimal Path.");
+			System.out.println(" ");
+			System.out.println("Place your argument as follows");
+			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime>");
+			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
+			System.out.println(" ");
+			System.out.println("Filename is the name of the file in text-map format or coordinate-based system being inputted");
+			System.out.println("inCoord is if the file is a coordinate-based system. If so, argument should be true and if it is a text-map format, argument is false.");
+			System.out.println("outCoord is if the output will be a coordinate-based system. If so, argument should be true and if it is a text-map format, argument is false.");
+			System.out.println("Stack, Queue, Optimal Path are the methods for determining the solution. Only make the method you want as true and the rest as false.");
+			System.out.println("runTime is if you would like the runtime of the program. If so, argument should be true and if no, argument is false");
+			System.out.println(" ");
+			System.out.println("Example:");
+			System.out.println("mediumMap.txt false false true false false true");
+			System.out.println("Input is a text-map and output is a text-map. The path is determined through Stack and it shows the runtime.");
+			System.out.println(" ");
+			System.out.println("mediumMapC.txt true false false false true false");
+			System.out.println("Input is a coordinate-based and output is a text-map. The path is determined through Optimal Path and it does not show the runtime.");
 			
 			System.exit(0);
 		}
 		
 		if(stack == true && (stack == queue || stack == opt)) {
-			System.out.println("Two method switches are true. Only one switch must be true.");
+			System.out.println("Two or more method switches are true. Only one method switch must be true.");
+			System.exit(-1);
 		}
 		if(queue == true && (queue == stack || queue == opt)) {
-			System.out.println("Two method switches are true. Only one switch must be true.");
+			System.out.println("Two or more method switches are true. Only one method switch must be true.");
+			System.exit(-1);
+		}
+		if(stack == false && queue == false && opt == false) {
+			System.out.println("All method switches are false. One method switch must be true.");
+			System.exit(-1);
 		}
 		
+		
+		//After initializing all booleans and methods based on the argument
 		if(incoordinate) { //Incoordinate
 			textmap = CoordToMap(filename); 
 		}
