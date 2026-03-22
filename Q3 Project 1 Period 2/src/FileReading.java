@@ -14,7 +14,7 @@ public class FileReading {
 	public static String easyC2 = "easyMapC2.txt";
 	public static String mediumC = "mediumMapC.txt";
 	public static String hardC = "hardMapC.txt";
-	public static String noSolutionC = "noSolutionMapC.txt";
+	public static String noSolutionC = "noSolutionMapC.txt";      //for previous testing
 	
 	private static String filename;
 	private static boolean stack;
@@ -352,21 +352,21 @@ public class FileReading {
 			}
 		}
 		else if(args.length == 7) {
-			filename = args[0];
-			incoordinate = Boolean.parseBoolean(args[1]);          // is input a Coord?
-			outcoordinate = Boolean.parseBoolean(args[2]);        // will output be a Coord?
-			stack = Boolean.parseBoolean(args[3]);
-			queue = Boolean.parseBoolean(args[4]);       //methods
-			opt = Boolean.parseBoolean(args[5]); 
-			time = Boolean.parseBoolean(args[6]);     //show runtime or not
+			incoordinate = Boolean.parseBoolean(args[0]);          // is input a Coord?
+			outcoordinate = Boolean.parseBoolean(args[1]);        // will output be a Coord?
+			stack = Boolean.parseBoolean(args[2]);
+			queue = Boolean.parseBoolean(args[3]);       //methods
+			opt = Boolean.parseBoolean(args[4]); 
+			time = Boolean.parseBoolean(args[5]);     //show runtime or not
+			filename = args[6];
 		}
 		else {
 			System.out.println("Place your argument as follows");
-			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime>");
+			System.out.println("<boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime> <String Filename>");
 			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
 			System.out.println(" ");
 			System.out.println("Example:");
-			System.out.println("mediumMap.txt false false true false false true");
+			System.out.println("false false true false false true mediumMap.txt");
 			System.out.println(" ");
 			System.out.println("Need more help? Input argument as Yes");
 			
@@ -380,7 +380,7 @@ public class FileReading {
 			System.out.println("It uses several methods, Stack, Queue and Optimal Path, to guide the Wolverine.");
 			System.out.println(" ");
 			System.out.println("Place your argument as follows");
-			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime>");
+			System.out.println("<boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime> <String Filename>");
 			System.out.println("Boolean are either true and false. Only ONE of the stack, queue, opt must be true. The rest are false.");
 			System.out.println(" ");
 			System.out.println("Filename is the name of the file in text-map format or coordinate-based system being inputted");
@@ -390,10 +390,10 @@ public class FileReading {
 			System.out.println("runTime is if you would like the runtime of the program. If so, argument should be true and if no, argument is false");
 			System.out.println(" ");
 			System.out.println("Example:");
-			System.out.println("mediumMap.txt false false true false false true");
+			System.out.println("false false true false false true mediumMap.txt");
 			System.out.println("Input is a text-map and output is a text-map. The path is determined through Stack and it shows the runtime.");
 			System.out.println(" ");
-			System.out.println("mediumMapC.txt true false false false true false");
+			System.out.println("true false false false true false mediumMapC.txt");
 			System.out.println("Input is a coordinate-based and output is a text-map. The path is determined through Optimal Path and it does not show the runtime.");
 			
 			System.exit(0);
