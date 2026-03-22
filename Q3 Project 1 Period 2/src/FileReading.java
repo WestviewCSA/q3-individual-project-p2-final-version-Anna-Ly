@@ -25,19 +25,36 @@ public class FileReading {
 	private static boolean outcoordinate;
 	private static boolean help;
 	
-	public static CoordPoint[][][] readTextMap(String filename){
+	public static CoordPoint[][][] readTextMap(String filename) throws Exception{
 		File file = new File(filename);
-		
 	
 		try (Scanner scanner = new Scanner(file)) {
-			String dimensionLine = scanner.nextLine();
+			
+			String dimensionLine = "";
+			try {
+				dimensionLine = scanner.nextLine();
+			}
+			catch(Exception e) {
+				System.out.println("IncompleteMapException");
+			}
+			
 			String[] firstLine = dimensionLine.split(" ");
 			////
 			int[] parts = new int[firstLine.length];          //initalization of 2d array
 			for(int i = 0; i < parts.length; i++) {
-				parts[i] = Integer.parseInt(firstLine[i]);
+				try {
+					parts[i] = Integer.parseInt(firstLine[i]);
+				}
+				catch(Exception e){
+					System.out.println("IncorrectMapFormatException");
+				}
 				//System.out.println(parts[i]);
 			}
+			if (parts[1] <= 0 || parts[2] <= 0 || parts[0] <= 0) {
+	            throw new Exception("IncorrectMapFormatException");
+	        }
+			
+			
 			CoordPoint[][][] map = new CoordPoint[parts[2]][parts[0]][parts[1]]; //layer, row, col
 
 			int layer = 0;
@@ -47,10 +64,22 @@ public class FileReading {
 				if (line.isEmpty()) {
                     continue;
                 }
-				String[] l = line.split(" ");
 				
+				if (layer >= map.length) {
+	                throw new Exception("IncompleteMapException");
+	            }
+				
+				
+				String[] l = line.split(" ");
+				if (l.length != map[0][0].length) { 
+	                throw new Exception("IncompleteMapException");
+	            }
 				
 				for(int i = 0; i < l.length; i++) {
+					if (!l[i].equals("W") && !l[i].equals(".") && !l[i].equals("$") && !l[i].equals("@") && !l[i].equals("|")) {
+	                    throw new Exception("IllegalMapCharacterException");
+	                }
+					
 					map[layer][row][i] = new CoordPoint(layer, row, i, l[i]);
 					//System.out.println(map[row][i]);
 				}
@@ -60,6 +89,10 @@ public class FileReading {
 					layer++;
 				}
 			}
+			
+			if (layer < map.length) {
+	            throw new Exception("IncompleteMapException");
+	        }
 			return map;
 			
 		} catch (FileNotFoundException e) {
@@ -71,6 +104,7 @@ public class FileReading {
 		
 	}
 	
+	/*
 	public static CoordPoint[][] readCoordMap(String filename){ //no longer being used
 		File file = new File(filename);
 		
@@ -116,21 +150,38 @@ public class FileReading {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 	
 	
-	public static CoordPoint[][][] CoordToMap(String filename){
+	public static CoordPoint[][][] CoordToMap(String filename) throws Exception{
 		File file = new File(filename);
 		
 		try (Scanner scanner = new Scanner(file)) {
-			String dimensionLine = scanner.nextLine();
+			String dimensionLine = "";
+			try {
+				dimensionLine = scanner.nextLine();
+			}
+			catch(Exception e) {
+				System.out.println("IncompleteMapException");
+			}
+			
 			String[] firstLine = dimensionLine.split(" ");
 			////
 			int[] parts = new int[firstLine.length];          //initalization of 2d array
 			for(int i = 0; i < parts.length; i++) {
-				parts[i] = Integer.parseInt(firstLine[i]);
+				try {
+					parts[i] = Integer.parseInt(firstLine[i]);
+				}
+				catch(Exception e){
+					System.out.println("IncorrectMapFormatException");
+				}
 				//System.out.println(parts[i]);
 			}
+			
+			if (parts[1] <= 0 || parts[2] <= 0 || parts[0] <= 0) {
+	            throw new Exception("IncorrectMapFormatException");
+	        }
+			
 			CoordPoint[][][] map = new CoordPoint[parts[2]][parts[0]][parts[1]]; //layer, row, col
 			
 			for(int l = 0; l < map.length; l++) {
@@ -150,11 +201,23 @@ public class FileReading {
                 }
 				else {
 					String[] l = line.split(" ");
+					if (l.length != 4) { 
+		                throw new Exception("IncompleteMapException");
+		            }
+					
 					String symbolL = l[0];
+					if (!symbolL.equals("W") && !symbolL.equals(".") && !symbolL.equals("$") && !symbolL.equals("@") && !symbolL.equals("|")) {
+	                    throw new Exception("IllegalMapCharacterException");
+	                }
+					
 					//System.out.println(l[0]);
 					int rowL = Integer.parseInt(l[1]);
 					int colL = Integer.parseInt(l[2]);
 					int layerL = Integer.parseInt(l[3]);
+					if (rowL > parts[0] || colL > parts[1] || layerL > parts[2]) {
+	                    throw new Exception("IllegalMapCharacterException");
+	                }
+					
 				
 					map[layerL][rowL][colL] = new CoordPoint(layerL, rowL, colL, symbolL);
 				}
@@ -262,14 +325,15 @@ public class FileReading {
 		System.out.println("");
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		CoordPoint[][][] textmap;
+		//this is just my original testing, it does not affect the program
+		CoordPoint[][][] textmap = null;
 		filename = "noSolutionMap.txt";
 		incoordinate = false;          // is input a Coord?
 		outcoordinate = false;        // will output be a Coord?
 		stack = true;
-		queue = false;       //methods
+		queue = false;       //methods                                     
 		opt = false; 
 		time = true;     //show runtime or not
 		help = false;
@@ -284,7 +348,7 @@ public class FileReading {
 				help = true;
 			}
 			else {
-				System.out.println("Not a valid argument");
+				throw new Exception("IllegalCommandLineInputsException \n Invalid argument. Type 'Yes' for help.");
 			}
 		}
 		else if(args.length == 7) {
@@ -306,15 +370,14 @@ public class FileReading {
 			System.out.println(" ");
 			System.out.println("Need more help? Input argument as Yes");
 			
-			System.exit(0);
+			throw new Exception("IllegalCommandLineInputsException");
 		}
-		
 		
 		if(help) {
 			System.out.println("Help Center:");
 			System.out.println("This program is designed to create a path from the Wolverine to the Wolverine Buck in text-map format or coordinate-based system");
 			System.out.println("It takes the input of a text-map format or coordinate-based system and outputs a text-map format or coordinate-based system.");
-			System.out.println("It uses several methods, Stack, Queue and Optimal Path.");
+			System.out.println("It uses several methods, Stack, Queue and Optimal Path, to guide the Wolverine.");
 			System.out.println(" ");
 			System.out.println("Place your argument as follows");
 			System.out.println("<String Filename> <boolean inCoord> <boolean outCoord> <boolean Stack> <boolean Queue> <boolean Optimal Path> <boolean runTime>");
@@ -339,14 +402,17 @@ public class FileReading {
 		if(stack == true && (stack == queue || stack == opt)) {
 			System.out.println("Two or more method switches are true. Only one method switch must be true.");
 			System.exit(-1);
+			throw new Exception("IllegalCommandLineInputsException");
 		}
 		if(queue == true && (queue == stack || queue == opt)) {
 			System.out.println("Two or more method switches are true. Only one method switch must be true.");
 			System.exit(-1);
+			throw new Exception("IllegalCommandLineInputsException");
 		}
 		if(stack == false && queue == false && opt == false) {
 			System.out.println("All method switches are false. One method switch must be true.");
 			System.exit(-1);
+			throw new Exception("IllegalCommandLineInputsException");
 		}
 		
 		
@@ -355,11 +421,17 @@ public class FileReading {
 			textmap = CoordToMap(filename); 
 		}
 		else {
-			textmap = readTextMap(filename);
+			try {
+				textmap = readTextMap(filename);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(-1);
+			}
 		}
 		
 		
-		int startTime = (int) System.currentTimeMillis();
+		int startTime = (int) System.currentTimeMillis(); // start time of solving algorithm
 		
 		CoordPoint[][][] map = null;
 		if(stack) {
@@ -375,8 +447,10 @@ public class FileReading {
 			map = oMap.sol();
 		}
 		
-		int endTime =  (int) System.currentTimeMillis();
+		int endTime =  (int) System.currentTimeMillis(); // end time of solving algorithm
 		double duration = (double)(endTime - startTime)/1000;
+		
+		
 		
         if(outcoordinate) { //Outcoordinate
         	CoordPoint[][] maptocoord = MapToCoord(map);
