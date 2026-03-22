@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class FileReading {
+public class p2 {
 	
 	public static String easyM = "easyMap.txt";
 	public static String mediumM = "mediumMap.txt";
@@ -214,12 +214,13 @@ public class FileReading {
 					int rowL = Integer.parseInt(l[1]);
 					int colL = Integer.parseInt(l[2]);
 					int layerL = Integer.parseInt(l[3]);
-					if (rowL > parts[0] || colL > parts[1] || layerL > parts[2]) {
+					if (rowL > parts[0] || rowL < 0 || colL > parts[1] || colL < 0 || layerL > parts[2] || layerL < 0 ) {
 	                    throw new Exception("IllegalMapCharacterException");
 	                }
-					
+					else {
+						map[layerL][rowL][colL] = new CoordPoint(layerL, rowL, colL, symbolL);
+					}
 				
-					map[layerL][rowL][colL] = new CoordPoint(layerL, rowL, colL, symbolL);
 				}
 			}
 			return map;
